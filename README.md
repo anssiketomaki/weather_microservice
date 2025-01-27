@@ -1,4 +1,4 @@
-# To run the application locally in Docker:
+# To run the application locally in Docker
 
 1) Create a `.env` file in the `flask_weather_service` folder and add your OpenWeatherMap API key:
     OPENWEATHER_API_KEY="here_is_your_apikey_in_doublequotes"
