@@ -1,0 +1,76 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment directories
+venv/
+ENV/
+env/
+*.env
+
+# Environment variables and API keys
+.env
+
+# Docker files and related artifacts
+*.log
+*.pid
+*.tar
+*.bak
+*.swp
+*.tmp
+*.old
+*.orig
+*.save
+*.pyc
+
+# Output files
+*.sqlite3
+*.db
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+
+# macOS system files
+.DS_Store
+
+# Logs and debug files
+*.log
+*.out
+
+# Generated documentation
+docs/_build/
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+*.cover
+*.coverage
+.coverage.*
+
+# MyPy type-checking cache
+.mypy_cache/
+
+# Distribution / Packaging
+*.egg-info/
+dist/
+build/
+
+# JetBrains IDEs
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Miscellaneous IDEs or editors
+*.sublime-workspace
+*.sublime-project
+*.swp
+*.editorconfig
+*.project
+*.workspace
