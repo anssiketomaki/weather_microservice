@@ -27,7 +27,6 @@ jobs:
       #   run: pytest
 
   build-docker:
-    # Tämä jobi ajetaan VAIN jos lint-and-test onnistui
     needs: lint-and-test
     runs-on: ubuntu-latest
     steps:
@@ -53,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: . # Mistä hakemistosta buildataan (projektin juuri)
-          file: ./Dockerfile # Dockerfile-tiedoston sijainti
+          file: ./flask_weather_service/Dockerfile # Dockerfile-tiedoston sijainti
           push: false # Tärkeää: EI yritetä pushata imagea mihinkään rekisteriin tässä vaiheessa
           # Tagitetaan image esim. commitin tunnisteella uniikkiuden varmistamiseksi
           tags: weather_microservice:${{ github.sha }}
