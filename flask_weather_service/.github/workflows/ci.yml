@@ -1,0 +1,60 @@
+name: Basic CI Pipeline
+
+on: [push, pull_request] # Käynnistyy pushista ja pull requesteista
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Lisää tähän vaiheet linttaukselle (esim. Super-Linter)
+      # - name: Lint Code Base
+      #   uses: github/super-linter@v6
+      #   env:
+      #     DEFAULT_BRANCH: main # tai develop
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Lisää tähän vaiheet testaukselle (esim. pytest)
+      # - name: Set up Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: '3.9'
+      # - name: Install dependencies
+      #   run: pip install -r app/requirements.txt pytest # Olettaen että requirements.txt on app/-kansiossa
+      # - name: Run tests
+      #   run: pytest
+
+  build-docker:
+    # Tämä jobi ajetaan VAIN jos lint-and-test onnistui
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Asentaa Docker Buildx -työkalun, joka mahdollistaa tehokkaammat buildit
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Tässä kohtaa normaalisti kirjautuisit Docker-rekisteriin (esim. Docker Hub tai GitHub Container Registry)
+      # Esim. GitHub Container Registryyn kirjautuminen:
+      # - name: Log in to GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      # Jätetään kirjautuminen nyt pois, koska keskitymme vain buildiin
+
+      # Rakentaa Docker-imagen ja tagittaa sen
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: . # Mistä hakemistosta buildataan (projektin juuri)
+          file: ./Dockerfile # Dockerfile-tiedoston sijainti
+          push: false # Tärkeää: EI yritetä pushata imagea mihinkään rekisteriin tässä vaiheessa
+          # Tagitetaan image esim. commitin tunnisteella uniikkiuden varmistamiseksi
+          tags: weather_microservice:${{ github.sha }}
+          # Voitaisiin lisätä myös esim. latest-tagi: tags: weather_microservice:latest, weather_microservice:${{ github.sha }}
