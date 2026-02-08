@@ -2,9 +2,9 @@ name: Basic CI Pipeline
 
 on: 
   push:
-    branches: [main] # Käynnistyy pushista main- ja develop-haaroihin
+    branches: [main]
   pull_request:
-    branches: [main] # Käynnistyy pushista ja pull requesteista
+    branches: [main]
 
 jobs:
   test-build:
