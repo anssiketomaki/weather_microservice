@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./flask_weather_service # Mistä hakemistosta buildataan (projektin juuri)
-          file: Dockerfile # Dockerfile-tiedoston sijainti
+          file: ./flask_weather_service/Dockerfile # Dockerfile-tiedoston sijainti
           push: false # Tärkeää: EI yritetä pushata imagea mihinkään rekisteriin tässä vaiheessa
           # Tagitetaan image esim. commitin tunnisteella uniikkiuden varmistamiseksi
           tags: weather_microservice:${{ github.sha }}
