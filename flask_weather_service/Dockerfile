@@ -1,19 +1,24 @@
 # Use the official Python image
-FROM python:3.14-alpine
-
-# Set the working directory
+FROM python:3.14-alpine AS builder
 WORKDIR /app
 
+# Install build tools (needed for some pip packages)
 RUN apk add --no-cache gcc musl-dev libffi-dev
-# Copy requirements and install them
-COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application
+# Install requirements into a specific folder
+COPY requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+# STAGE 2: Runtime
+FROM python:3.14-alpine
+WORKDIR /app
+
+# Copy ONLY the installed packages from the builder
+COPY --from=builder /root/.local /root/.local
 COPY . .
 
-# Expose the port Flask will run on
-EXPOSE 5000
+# Ensure the app can find the moved packages
+ENV PATH=/root/.local/bin:$PATH
 
-# Define the command to run the app
+EXPOSE 5000
 CMD ["python", "app.py", "--port", "5000"]

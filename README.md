@@ -1,3 +1,9 @@
+# The Docker container in use
+
+This app was originally set to use debian-slim in its docker container. It's a quick way to build the container, but in long term use a smaller container as an end result would be beneficial. I chose to switch this app to use Alpine-linux based container and a builder sceme, where the app is first compiled in a builder container and then the runtime necessities are transferred to the actual resulting container.
+
+This approach leads to the smallest possible Linux distro based docker container that is smaller than 50% of the original debian container's size. That frees up resources for other use while also making the surface area for security risks smaller. In a builder sceme built containers there are no source code files of the project and the Alpine container base is very limited in it's tooling and abilities in comparison to the original Debian container.
+
 # To run the application locally in Docker
 
 1) Create a `.env` file in the `flask_weather_service` folder and add your OpenWeatherMap API key:
